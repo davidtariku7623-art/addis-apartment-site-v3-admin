@@ -1,10 +1,10 @@
 // EDIT THIS FILE to change the brand name and contact details everywhere.
 export const siteConfig = {
-  brandName: "Addis Apartment Project",
-  tagline: "Find a verified apartment in Addis Ababa, without the endless searching.",
-  whatsappNumber: "251900000000", // digits only, with country code, no + sign
-  telegramUsername: "your_username", // without the @ sign
-  email: "hello@example.com",
+  brandName: "LUCY DISCOVERY",
+  tagline: "Stay. Travel. Experience.",
+  whatsappNumber: "251993171758", // digits only, with country code, no + sign
+  telegramUsername: "mengedegnaw_1", // without the @ sign
+  email: "davidtariku7623@gmail.com",
 };
 
 export function whatsappLink(message: string) {

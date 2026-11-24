@@ -1,0 +1,61 @@
+/* Site theme: green and white foundation with deep charcoal and subtle gold accents.
+   To undo it, remove the line  import "./theme.css";  from app/layout.tsx */
+html:root{--ink:#1d2523;--muted:#5d6b69;--bg:#ffffff;--alt:#f3f6f3;--line:#dfe6e2;--brand:#1f5c55;--brand-dark:#164641;--gold:#b8924a}
+
+body h1, body h2, body h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 600; letter-spacing: -0.01em; }
+body .site-header { background: #ffffff; }
+body .brand { display: inline-flex; align-items: center; gap: 10px; text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; font-size: 0.95rem; }
+body .brand img { display: block; }
+body .site-footer { background: #151d1b; }
+body .hero .btn:hover, body .btn.gold:hover { background: #9a7a3c; }
+body .btn.gold { background: var(--gold); color: #fff; }
+
+/* Hero. Add your own photo as public/hero.jpg. Without it you get a clean deep-green background. */
+body .hero.main-hero {
+  background: linear-gradient(rgba(14,40,37,.68), rgba(14,40,37,.84)), url("/hero.jpg") center / cover no-repeat, #1f5c55;
+  color: #ffffff; padding: 104px 0 96px;
+}
+body .hero.main-hero h1 { font-size: clamp(2.1rem, 6vw, 3.8rem); line-height: 1.1; max-width: 800px; margin-bottom: 18px; }
+body .hero.main-hero .lead { font-size: 1.15rem; max-width: 580px; opacity: .92; margin: 0 0 30px; }
+.eyebrow { letter-spacing: .26em; text-transform: uppercase; font-size: .78rem; color: var(--gold); margin: 0 0 18px; }
+.tagline { margin-top: 34px; letter-spacing: .22em; text-transform: uppercase; font-size: .78rem; opacity: .9; }
+
+/* Three services. Optional photos: public/stays.jpg, public/experiences.jpg, public/packages.jpg */
+.cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.cat {
+  position: relative; display: flex; align-items: flex-end; min-height: 300px; border-radius: 12px; overflow: hidden;
+  text-decoration: none; color: #fff; background-color: #2d4a46; background-size: cover; background-position: center;
+  background-image: linear-gradient(180deg, rgba(14,30,28,.10), rgba(14,30,28,.84)), var(--img, none);
+  transition: transform .2s ease;
+}
+.cat:hover { transform: translateY(-3px); }
+.cat-stays { --img: url("/stays.jpg"); }
+.cat-exp { --img: url("/experiences.jpg"); }
+.cat-pkg { --img: url("/packages.jpg"); }
+.cat-text { padding: 24px; }
+.cat b { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.7rem; font-weight: 600; margin-bottom: 4px; }
+.cat small { display: block; font-size: 1rem; opacity: .93; }
+.cat-text::after { content: ""; display: block; width: 40px; height: 2px; background: var(--gold); margin-top: 14px; }
+
+/* Brand story */
+.story { background: #1b2523; color: #f1f4f2; text-align: center; padding: 80px 0; }
+.story h2 { font-size: clamp(1.7rem, 4.5vw, 2.5rem); max-width: 760px; margin: 0 auto 18px; }
+.story .gold-rule { width: 56px; height: 2px; background: var(--gold); margin: 0 auto 28px; }
+.story p { max-width: 680px; margin: 0 auto 1.1em; color: #d3dcd8; font-size: 1.05rem; }
+.story .closing { color: var(--gold); font-family: Georgia, "Times New Roman", serif; font-size: 1.3rem; margin-top: 1.6em; }
+
+@media (min-width: 601px) { body .section { padding-top: 76px; padding-bottom: 76px; } }
+@media (max-width: 800px) { .cats { grid-template-columns: 1fr; } .cat { min-height: 200px; } }
+@media (max-width: 600px) {
+  body .hero.main-hero { padding: 64px 0 56px; }
+  .story { padding: 56px 0; }
+  .tagline { margin-top: 26px; }
+}
+
+/* Discover Ethiopia section */
+.discover { text-align: center; padding: 80px 0; background: #ffffff; }
+.discover h2 { font-size: clamp(1.6rem, 4.2vw, 2.3rem); max-width: 720px; margin: 0 auto 18px; }
+.discover .gold-rule { width: 56px; height: 2px; background: var(--gold); margin: 0 auto 28px; }
+.discover p { max-width: 640px; margin: 0 auto 1.1em; color: var(--muted); font-size: 1.05rem; }
+.actions.center { justify-content: center; margin-top: 28px; }
+@media (max-width: 600px) { .discover { padding: 56px 0; } .actions.center .btn { flex: 1 1 100%; text-align: center; } }

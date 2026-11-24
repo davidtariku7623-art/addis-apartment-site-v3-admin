@@ -10,7 +10,7 @@ export default async function AreaPage({ params }: { params: Promise<{ slug: str
   const list = await getBuildingsInArea(area.id);
   return (
     <div className="container section">
-      <Link href="/#areas">← Choose another area</Link>
+      <Link href="/stays">← Choose another area</Link>
       <h1>Apartments in {area.name}</h1>
       {list.length === 0 ? (
         <p className="empty">No apartments listed here yet. Message us on WhatsApp and we will look for you.</p>

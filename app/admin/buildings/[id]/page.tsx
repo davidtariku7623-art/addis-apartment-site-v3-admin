@@ -1,19 +1,22 @@
 import { notFound } from "next/navigation";
 import { supabaseServer } from "../../../../lib/supabaseServer";
-import { getBuilding, photoUrl } from "../../../../lib/queries";
+import { getBuilding } from "../../../../lib/queries";
+import { photoUrl } from "../../../../lib/photoUrl";
 import { updateBuilding, deleteBuilding, addUnit, updateUnit, deleteUnit, deletePhoto } from "../../../../lib/actions";
 import BuildingForm from "../../../../components/BuildingForm";
 import UnitForm from "../../../../components/UnitForm";
 import PhotoUploader from "../../../../components/PhotoUploader";
+import type { Area, PhotoRecord, UnitRecord } from "../../../../lib/types";
 
 export default async function EditBuildingPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const buildingId = Number(id);
-  const b: any = await getBuilding(id);
+  const b = await getBuilding(id);
   if (!b) notFound();
   const supabase = await supabaseServer();
   const { data: areas } = await supabase.from("areas").select("*").order("name");
-  const photos = (b.photos ?? []).sort((x: any, y: any) => x.sort_order - y.sort_order);
+  const areaRows = (areas ?? []) as Area[];
+  const photos = [...b.photos].sort((x: PhotoRecord, y: PhotoRecord) => x.sort_order - y.sort_order);
 
   const saveBuilding = updateBuilding.bind(null, buildingId);
   const removeBuilding = deleteBuilding.bind(null, buildingId);
@@ -25,10 +28,10 @@ export default async function EditBuildingPage({ params }: { params: Promise<{ i
 
       <h2>Photos</h2>
       <div className="photo-grid">
-        {photos.map((p: any) => (
+        {photos.map((p: PhotoRecord) => (
           <div key={p.id} className="photo-thumb">
             <img src={photoUrl(p.path)} alt="" />
-            <form action={deletePhoto.bind(null, p.id, buildingId, p.path)}>
+            <form action={deletePhoto.bind(null, Number(p.id), buildingId, p.path)}>
               <button className="btn ghost small-btn">Remove</button>
             </form>
           </div>
@@ -37,14 +40,14 @@ export default async function EditBuildingPage({ params }: { params: Promise<{ i
       <PhotoUploader buildingId={buildingId} nextOrder={photos.length} />
 
       <h2>Building details</h2>
-      <BuildingForm areas={areas ?? []} building={b} action={saveBuilding} />
+      <BuildingForm areas={areaRows} building={b} action={saveBuilding} />
 
       <h2>Rooms</h2>
-      {(b.units ?? []).map((u: any) => (
+      {b.units.map((u: UnitRecord) => (
         <details key={u.id} className="unit-details">
           <summary>{u.name} — ${u.price_usd}/mo — {u.availability}</summary>
-          <UnitForm unit={u} submitLabel="Save room" action={updateUnit.bind(null, u.id, buildingId)} />
-          <form action={deleteUnit.bind(null, u.id, buildingId)}>
+          <UnitForm unit={u} submitLabel="Save room" action={updateUnit.bind(null, Number(u.id), buildingId)} />
+          <form action={deleteUnit.bind(null, Number(u.id), buildingId)}>
             <button className="btn ghost small-btn">Delete this room</button>
           </form>
         </details>

@@ -1,11 +1,17 @@
 import Link from "next/link";
-import { photoUrl } from "../lib/queries";
+import { photoUrl } from "../lib/photoUrl";
+import type { Building } from "../lib/data";
+import type { BuildingRecord } from "../lib/types";
 
-export default function BuildingCard({ b }: { b: any }) {
-  const units = b.units ?? [];
-  const open = units.filter((x: any) => x.availability === "Available").length;
-  const from = units.length ? Math.min(...units.map((x: any) => Number(x.price_usd))) : null;
-  const cover = (b.photos ?? [])[0];
+export default function BuildingCard({ b }: { b: BuildingRecord | Building }) {
+  const isDatabaseBuilding = "areas" in b;
+  const units = b.units.map((unit) => "price_usd" in unit
+    ? { price: unit.price_usd, availability: unit.availability }
+    : { price: unit.priceUsd, availability: unit.availability });
+  const open = units.filter((x) => x.availability === "Available").length;
+  const from = units.length ? Math.min(...units.map((x) => Number(x.price))) : null;
+  const areaName = isDatabaseBuilding ? b.areas?.name : b.area;
+  const cover = isDatabaseBuilding ? b.photos[0] : undefined;
   return (
     <article className="card">
       {cover ? (
@@ -15,7 +21,7 @@ export default function BuildingCard({ b }: { b: any }) {
       )}
       {b.verified && <b className="badge">Verified</b>}
       <div className="card-body">
-        <p className="muted">{b.areas?.name}</p>
+        <p className="muted">{areaName}</p>
         <h3>{b.name}</h3>
         <p className="price">{from !== null ? <><small>From </small>${from} <small>/ month</small></> : "Price on request"}</p>
         <p className="muted">{units.length} room{units.length === 1 ? "" : "s"} listed</p>

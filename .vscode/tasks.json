@@ -1,0 +1,130 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Validate demo website",
+			"type": "shell",
+			"command": "npm.cmd",
+			"args": [
+				"run",
+				"build"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Build demo with webpack",
+			"type": "shell",
+			"command": "npm.cmd",
+			"args": [
+				"run",
+				"build",
+				"--",
+				"--webpack"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Check demo website lint",
+			"type": "shell",
+			"command": "npm.cmd",
+			"args": [
+				"run",
+				"lint"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$eslint - stylish"
+			],
+			"group": "test"
+		},
+		{
+			"label": "Run demo website HTTPS",
+			"type": "shell",
+			"command": "npm.cmd",
+			"args": [
+				"run",
+				"dev:https"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "none"
+		},
+		{
+			"label": "Check project directory casing",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"-p",
+				"process.cwd()"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Build from normalized path",
+			"type": "shell",
+			"command": "npm.cmd",
+			"args": [
+				"run",
+				"build"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Create temporary friend preview link",
+			"type": "shell",
+			"command": "npx.cmd",
+			"args": [
+				"--yes",
+				"localtunnel",
+				"--port",
+				"3000",
+				"--local-https",
+				"--allow-invalid-cert"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "none"
+		},
+		{
+			"label": "Build demo with webpack",
+			"type": "shell",
+			"command": "npm.cmd",
+			"args": [
+				"run",
+				"build",
+				"--",
+				"--webpack"
+			],
+			"isBackground": false,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		},
+		{
+			"label": "Run demo website HTTPS",
+			"type": "shell",
+			"command": "npm.cmd",
+			"args": [
+				"run",
+				"dev:https"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "none"
+		}
+	]
+}

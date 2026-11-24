@@ -1,5 +1,7 @@
 "use client";
-export default function UnitForm({ unit, action, submitLabel }: { unit?: any; action: (fd: FormData) => void; submitLabel: string }) {
+import type { FormAction, UnitRecord } from "../lib/types";
+
+export default function UnitForm({ unit, action, submitLabel }: { unit?: UnitRecord; action: FormAction; submitLabel: string }) {
   return (
     <form action={action} className="admin-form unit-form">
       <label>Room name<input name="name" defaultValue={unit?.name} placeholder="e.g. 1-bedroom, 3rd floor" required /></label>
@@ -7,7 +9,7 @@ export default function UnitForm({ unit, action, submitLabel }: { unit?: any; ac
         <label>Price (USD/mo)<input type="number" name="price_usd" defaultValue={unit?.price_usd} required /></label>
         <label>Bedrooms<input type="number" name="bedrooms" defaultValue={unit?.bedrooms ?? 1} min={0} required /></label>
         <label>Bathrooms<input type="number" name="bathrooms" defaultValue={unit?.bathrooms ?? 1} min={0} required /></label>
-        <label>Size (m²)<input type="number" name="size_sqm" defaultValue={unit?.size_sqm} /></label>
+        <label>Size (m²)<input type="number" name="size_sqm" defaultValue={unit?.size_sqm ?? undefined} /></label>
       </div>
       <div className="row4">
         <label>Stay type

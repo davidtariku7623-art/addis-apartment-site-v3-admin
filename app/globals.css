@@ -61,3 +61,21 @@ summary{cursor:pointer;font-weight:600}
 .small-btn{padding:4px 10px;font-size:.8rem;margin-top:4px}
 .unit-details{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:10px}
 .unit-details summary{cursor:pointer;font-weight:600}
+@media (max-width: 600px) {
+  .container { padding: 0 16px; }
+  .section { padding-top: 32px; padding-bottom: 32px; }
+  .site-header { position: static; }
+  .bar { flex-direction: column; align-items: flex-start; gap: 6px; }
+  nav { gap: 14px; font-size: 0.85rem; }
+  .brand { font-size: 1rem; }
+  .hero { padding: 44px 0; }
+  .hero p { font-size: 1rem; }
+  h1 { font-size: 1.7rem; }
+  h2 { font-size: 1.3rem; }
+  .grid { grid-template-columns: 1fr; gap: 16px; }
+  .areas { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .card-body { padding: 14px; }
+  .unit { flex-direction: column; align-items: flex-start; }
+  .actions .btn { flex: 1 1 100%; text-align: center; }
+  .site-footer { padding: 32px 0; }
+}

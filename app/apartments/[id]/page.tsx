@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ContactButtons from "../../../components/ContactButtons";
 import { getBuilding, photoUrl } from "../../../lib/queries";
 import { whatsappLink, telegramLink } from "../../../lib/config";
 
@@ -14,7 +15,7 @@ export default async function BuildingPage({ params }: { params: Promise<{ id: s
       {photos.length > 0 ? (
         <div className="gallery">
           {photos.slice(0, 3).map((p: any, i: number) => (
-            <img key={p.id} className={i === 0 ? "photo big" : "photo"} src={photoUrl(p.path)} alt={b.name} />
+            <img key={p.id} className={i === 0 ? "photo big" : "photo"} src={photoUrl(p.path)} alt={b.name} style={{ objectFit: "cover", width: "100%" }} />
           ))}
         </div>
       ) : (
@@ -26,23 +27,20 @@ export default async function BuildingPage({ params }: { params: Promise<{ id: s
       <ul className="tags">{(b.amenities ?? []).map((a: string) => <li key={a}>{a}</li>)}</ul>
       <p className="muted">{b.notes}</p>
       <h2>Rooms in this building</h2>
-      {(b.units ?? []).map((x: any) => (
-        <div className="unit" key={x.id}>
-          <div>
-            <h3>{x.name}</h3>
-            <p className="muted">{x.bedrooms === 0 ? "Studio" : `${x.bedrooms} bed`} · {x.bathrooms} bath{x.size_sqm ? ` · ${x.size_sqm} m²` : ""} · {x.furnished ? "Furnished" : "Unfurnished"} · {x.stay_type}</p>
-            <p className={x.availability === "Available" ? "avail yes" : "avail"}>{x.availability}</p>
+      {(b.units ?? []).map((x: any) => {
+        const msg = `Hello, I am interested in the ${x.name} at ${b.name} (${b.areas?.name}), $${x.price_usd}/month. Ref: APT-${b.id}-${x.id}. Is it still available?`;
+        return (
+          <div className="unit" key={x.id}>
+            <div>
+              <h3>{x.name}</h3>
+              <p className="muted">{x.bedrooms === 0 ? "Studio" : `${x.bedrooms} bed`} · {x.bathrooms} bath{x.size_sqm ? ` · ${x.size_sqm} m²` : ""} · {x.furnished ? "Furnished" : "Unfurnished"} · {x.stay_type}</p>
+              <p className={x.availability === "Available" ? "avail yes" : "avail"}>{x.availability}</p>
+              <p className="price">${x.price_usd} <small>/ month</small></p>
+            </div>
+            {x.availability !== "Unavailable" && <ContactButtons waHref={whatsappLink(msg)} tgHref={telegramLink()} message={msg} />}
           </div>
-          <div>
-            <p className="price">${x.price_usd} <small>/ month</small></p>
-            {x.availability !== "Unavailable" && (
-              <a className="btn wa" target="_blank" rel="noopener noreferrer"
-                href={whatsappLink(`Hello, I am interested in the ${x.name} at ${b.name} (${b.areas?.name}), $${x.price_usd}/month. Is it still available?`)}>Ask on WhatsApp</a>
-            )}
-          </div>
-        </div>
-      ))}
-      <div className="actions"><a className="btn tg" href={telegramLink()} target="_blank" rel="noopener noreferrer">Ask on Telegram</a></div>
+        );
+      })}
     </div>
   );
 }

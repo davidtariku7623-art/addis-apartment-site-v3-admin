@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllBuildings } from "../../lib/queries";
+import type { BuildingRecord } from "../../lib/types";
 
 export default async function AdminHome() {
   const buildings = await getAllBuildings();
@@ -7,8 +8,8 @@ export default async function AdminHome() {
     <div>
       <h1>Your buildings</h1>
       <p className="muted">{buildings.length} building{buildings.length === 1 ? "" : "s"} total.</p>
-      {buildings.length === 0 && <p className="empty">No buildings yet. Click "+ Add building" above to create your first one.</p>}
-      {buildings.map((b: any) => (
+      {buildings.length === 0 && <p className="empty">No buildings yet. Click &quot;+ Add building&quot; above to create your first one.</p>}
+      {buildings.map((b: BuildingRecord) => (
         <div className="unit" key={b.id}>
           <div>
             <h3>{b.name}</h3>
